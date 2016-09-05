@@ -1,0 +1,14 @@
+{
+  "name": "nw-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nwjs-project/index.html",
+  "title": "nw-app",
+  "author": "Akshay Arora",
+  "window": {
+    "width": 800,
+    "height": 500,
+    "frame": true,
+    "resizable":false
+  }
+}
