@@ -1,7 +1,6 @@
 (function() {
-  var app = angular.module("nwjs", ['ngRoute', 'ngAnimate'])
+  var app = angular.module("nwjs", ['ngRoute', 'ngAnimate','ngMaterial'])
   .run(function(){
-  	
   });
 
   app.config(function($routeProvider) {
@@ -14,8 +13,14 @@
       });
   });
 
-  app.controller('LoginController', function(){
-  	// alert('Login Page init')
+  app.controller('LoginController', function($scope,$timeout){
+  	$scope.isLoading=false;
+  	$scope.login=function(){
+  		$scope.isLoading=true;
+  		$timeout(function(){
+  			$scope.isLoading=false;
+  		},2000)
+  	}
   })
 
 })();

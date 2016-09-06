@@ -1,9 +1,28 @@
-<div class="login-wrapper">
-	<form>
-	<input type="text" name="username" placeholder="Enter Username" autocomplete="off"/>
-	<br/>
-	<input type="password" name="password" placeholder="Enter Password" autocomplete="off"/>
-	<br/>
-	<button type="submit">SignIn</button>
-	</form>
+<div layout="column" layout-align="center center" layout-fill="layout-fill">
+
+  <div layout="column" class="loginBox md-whiteframe-z1">
+    <md-toolbar>
+      <h2 class="md-toolbar-tools"><span>Login</span></h2>
+    </md-toolbar>
+    <form ng-submit="login()">
+      <md-content layout="column" class="md-padding">
+        <md-input-container>
+          <label>EmailAddress</label>
+          <input type="email" ng-model="username" required/>
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <input type="password" ng-model="password" required/>
+        </md-input-container>
+        <div layout="row" layout-align="center center" style="padding-top:20px;">
+          <md-button type="submit" class="md-raised md-primary">Login</md-button>
+          <div flex="flex"></div>
+          <md-button href="" md-no-ink="md-no-ink">Forgot Password</md-button>
+        </div>
+      </md-content>
+    </form>
+  </div>
+  <div class="login-loader" ng-show="isLoading">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
 </div>
