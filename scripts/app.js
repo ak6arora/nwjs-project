@@ -12,7 +12,7 @@
         templateUrl: 'pages/login.html',
         controller: 'LoginController'
       })
-      .when('/dashboard',{
+      .when('/dashboard', {
         templateUrl: 'pages/dashboard.html',
         controller: 'DashboardController'
       })
@@ -21,24 +21,49 @@
       });
   });
 
-  app.controller('LoginController', function($rootScope, $scope, $timeout, $mdDialog,$location) {
+  app.controller('LoginController', function($rootScope, $scope, $timeout, $mdDialog, $location) {
     $scope.isLoading = false;
     var alert = $mdDialog.alert({
-      title: 'Incorrect Username',
-      textContent: 'The username you entered doesnot exist',
+      title: 'Invalid credentials',
+      textContent: 'Please check your credentials',
       ok: 'Close'
     });
     $scope.login = function() {
       $scope.isLoading = true;
-      $timeout(function() {
-        if ($rootScope.db.users.indexOf($scope.username) > -1) {
-          $location.path("/dashboard")
-        } else {
-          $mdDialog.show(alert)
+      $.ajax({
+        url: "https://hrm.techaspect.com/symfony/web/index.php/auth/validateCredentials",
+        type: 'POST',
+        data: $('form').serialize(),
+        beforeSend: function() {},
+        success: function(data) {
+          if (data.indexOf('Invalid credentials') != -1) {
+            $scope.isLoading = false;
+            $mdDialog.show($mdDialog.alert({
+              title: 'Invalid credentials',
+              textContent: 'Please check your credentials',
+              ok: 'Close'
+            }));
+          }
+          else {
+            $location.path("/dashboard");
+            $scope.$apply();
+          }
+        },
+        error: function(err) {
+          $scope.isLoading = false;
+          $mdDialog.show($mdDialog.alert({
+            title: 'Server Error',
+            textContent: err,
+            ok: 'Close'
+          }));    
         }
-        $scope.isLoading = false;
-      }, 2000)
+      });
+
     }
+  })
+
+  app.controller('DashboardController', function() {
+
   })
 
 })();
